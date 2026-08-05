@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="description" content="PRAXIA — Centro de Estudios Tributarios en Minería y Energía SpA. Asesoría tributaria, corporativa y de cumplimiento para el sector minero-energético." />
+<meta property="og:title" content="PRAXIA | Centro de Estudios Tributarios en Minería y Energía" />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFFFF; color: #1A1A1A; font-family: "IBM Plex Sans", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #A32B2C; text-decoration: none; }
+  a:hover { color: #7C2521; text-decoration: underline; }
+  :focus-visible { outline: 2px solid #A32B2C; outline-offset: 3px; }
+</style>
+</helmet>
+
+<div style="minHeight:100vh; display:flex; flexDirection:column">
+
+  <header style="position:sticky; top:0; zIndex:60; background:#2B2B28; color:#F4F3F0">
+    <div style="maxWidth:1320px; margin:0 auto; padding:0 40px; display:flex; alignItems:center; gap:40px; height:76px">
+      <a href="#" onClick="{{ goHome }}" style="color:#F4F3F0; textDecoration:none; display:flex; flexDirection:column; lineHeight:1" aria-label="PRAXIA, ir a inicio">
+        <span style="fontFamily:'Source Serif 4', serif; fontSize:26px; fontWeight:700; letterSpacing:0.14em">PRAXIA</span>
+        <span style="fontFamily:'IBM Plex Mono', monospace; fontSize:9px; letterSpacing:0.18em; color:#9C978F; marginTop:6px">ESTUDIOS TRIBUTARIOS · MINERÍA Y ENERGÍA</span>
+      </a>
+
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <nav style="display:flex; alignItems:center; gap:26px; marginLeft:auto; whiteSpace:nowrap" aria-label="Navegación principal">
+        <a href="#" onClick="{{ goQuienes }}" style="color:#F4F3F0; textDecoration:none; fontSize:14px; letterSpacing:0.02em" style-hover="color:#FFFFFF; textDecoration:underline">Quiénes somos</a>
+
+        <div onMouseEnter="{{ openMega }}" onMouseLeave="{{ closeMega }}" style="position:relative; display:flex; alignItems:center">
+          <a href="#" onClick="{{ goAreas }}" onFocus="{{ openMega }}" aria-haspopup="true" style="color:#F4F3F0; textDecoration:none; fontSize:14px; display:flex; alignItems:center; gap:8px" style-hover="color:#FFFFFF">
+            Áreas de práctica
+            <span style="fontSize:9px; color:#9C978F">▼</span>
+          </a>
+          <sc-if value="{{ megaOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute; top:52px; left:-320px; width:880px; background:#FFFFFF; color:#1A1A1A; border:1px solid #E3E0DB; borderTop:3px solid #A32B2C; boxShadow:0 24px 60px rgba(26,26,26,0.18); padding:32px 36px; display:grid; gridTemplateColumns:1fr 1fr; gap:4px 40px">
+              <sc-for list="{{ areas }}" as="a" hint-placeholder-count="7">
+                <a href="#" onClick="{{ a.go }}" style="display:block; padding:12px 14px; margin:0 -14px; textDecoration:none; color:#1A1A1A; borderBottom:1px solid #F4F3F0" style-hover="background:#F4F3F0; textDecoration:none">
+                  <span style="display:block; fontFamily:'Source Serif 4', serif; fontSize:17px; fontWeight:600">{{ a.name }}</span>
+                  <span style="display:block; fontSize:13px; color:#6F6B66; marginTop:4px; lineHeight:1.45">{{ a.tagline }}</span>
+                </a>
+              </sc-for>
+              <a href="#" onClick="{{ goIndustria }}" style="gridColumn:1 / -1; marginTop:18px; padding:16px 18px; background:#2B2B28; color:#F4F3F0; textDecoration:none; display:flex; justifyContent:space-between; alignItems:center" style-hover="background:#1A1A1A; textDecoration:none">
+                <span style="fontFamily:'Source Serif 4', serif; fontSize:17px">Industria: Minería y Energía</span>
+                <span style="fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.12em">VER PÁGINA →</span>
+              </a>
+            </div>
+          </sc-if>
+        </div>
+
+        <a href="#" onClick="{{ goEquipo }}" style="color:#F4F3F0; textDecoration:none; fontSize:14px" style-hover="color:#FFFFFF; textDecoration:underline">Equipo</a>
+        <a href="#" onClick="{{ goInsights }}" style="color:#F4F3F0; textDecoration:none; fontSize:14px" style-hover="color:#FFFFFF; textDecoration:underline">Insights</a>
+        <a href="#" onClick="{{ goContacto }}" style="color:#F4F3F0; textDecoration:none; fontSize:14px" style-hover="color:#FFFFFF; textDecoration:underline">Contacto</a>
+      </nav>
+      </sc-if>
+
+      <div style="display:flex; alignItems:center; gap:18px; paddingLeft:22px; marginLeft:auto">
+        <button onClick="{{ toggleSearch }}" aria-label="Buscar" style="background:none; border:none; color:#F4F3F0; cursor:pointer; fontSize:15px; padding:6px">⌕</button>
+        <div style="display:flex; alignItems:center; gap:6px; fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.08em">
+          <button onClick="{{ setEs }}" style="{{ esStyle }}">ES</button>
+          <span style="color:#4A4844">/</span>
+          <button onClick="{{ setEn }}" style="{{ enStyle }}">EN</button>
+        </div>
+        <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ toggleMobileNav }}" aria-label="Abrir menú de navegación" aria-expanded="{{ mobileNav }}" style="background:none; border:1px solid #4A4844; color:#F4F3F0; cursor:pointer; fontSize:16px; padding:8px 12px; lineHeight:1">{{ navIcon }}</button>
+        </sc-if>
+      </div>
+    </div>
+
+    <sc-if value="{{ mobileNav }}" hint-placeholder-val="{{ false }}">
+      <nav style="borderTop:1px solid #4A4844; padding:12px 20px 26px" aria-label="Navegación principal">
+        <a href="#" onClick="{{ goQuienes }}" style="display:block; color:#F4F3F0; textDecoration:none; fontSize:16px; padding:15px 0; borderBottom:1px solid #4A4844">Quiénes somos</a>
+        <button onClick="{{ toggleMobileAreas }}" aria-expanded="{{ mobileAreas }}" style="width:100%; background:none; border:none; borderBottom:1px solid #4A4844; color:#F4F3F0; fontSize:16px; fontFamily:'IBM Plex Sans', sans-serif; padding:15px 0; display:flex; justifyContent:space-between; alignItems:center; cursor:pointer">
+          <span>Áreas de práctica</span>
+          <span style="color:#A32B2C; fontSize:18px">{{ areasIcon }}</span>
+        </button>
+        <sc-if value="{{ mobileAreas }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; flexDirection:column; background:#1A1A1A; padding:6px 16px">
+            <sc-for list="{{ areas }}" as="a" hint-placeholder-count="7">
+              <a href="#" onClick="{{ a.go }}" style="color:#C9C5BE; textDecoration:none; fontSize:15px; padding:13px 0; borderBottom:1px solid #302F2C">{{ a.name }}</a>
+            </sc-for>
+            <a href="#" onClick="{{ goIndustria }}" style="color:#A32B2C; textDecoration:none; fontSize:15px; padding:13px 0">Industria: Minería y Energía →</a>
+          </div>
+        </sc-if>
+        <a href="#" onClick="{{ goEquipo }}" style="display:block; color:#F4F3F0; textDecoration:none; fontSize:16px; padding:15px 0; borderBottom:1px solid #4A4844">Equipo</a>
+        <a href="#" onClick="{{ goInsights }}" style="display:block; color:#F4F3F0; textDecoration:none; fontSize:16px; padding:15px 0; borderBottom:1px solid #4A4844">Insights</a>
+        <a href="#" onClick="{{ goContacto }}" style="display:block; color:#F4F3F0; textDecoration:none; fontSize:16px; padding:15px 0">Contacto</a>
+      </nav>
+    </sc-if>
+
+    <sc-if value="{{ searchOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#1A1A1A; borderTop:1px solid #4A4844">
+        <div style="maxWidth:1320px; margin:0 auto; padding:26px 40px 30px">
+          <input value="{{ query }}" onChange="{{ onQuery }}" placeholder="Buscar áreas de práctica, profesionales, publicaciones…" aria-label="Buscar en el sitio" style="width:100%; background:transparent; border:none; borderBottom:1px solid #4A4844; color:#FFFFFF; fontFamily:'Source Serif 4', serif; fontSize:24px; padding:10px 0; outline:none" />
+          <div style="marginTop:18px; display:flex; flexDirection:column; gap:2px">
+            <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
+              <a href="#" onClick="{{ r.go }}" style="display:flex; alignItems:baseline; gap:16px; padding:11px 0; borderBottom:1px solid #302F2C; color:#F4F3F0; textDecoration:none" style-hover="color:#FFFFFF">
+                <span style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#A32B2C; width:96px; flexShrink:0">{{ r.kind }}</span>
+                <span style="fontSize:15px">{{ r.label }}</span>
+              </a>
+            </sc-for>
+          </div>
+          <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+            <p style="color:#9C978F; fontSize:14px; marginTop:16px">Sin coincidencias para esta búsqueda.</p>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isEn }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#A32B2C; color:#FFFFFF; fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.1em; textAlign:center; padding:9px 20px">EN — ENGLISH CONTENT IN PREPARATION. SPANISH VERSION SHOWN.</div>
+    </sc-if>
+  </header>
+
+  <main style="flex:1">
+
+    <!-- HOME -->
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <section style="background:#FFFFFF; borderBottom:1px solid #E3E0DB">
+          <div style="maxWidth:1320px; margin:0 auto; padding:96px 40px 88px; display:grid; gridTemplateColumns:{{ gridHero }}; gap:{{ gapWide }}; alignItems:center">
+            <div>
+              <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.2em; color:#A32B2C; margin:0 0 26px">CENTRO DE ESTUDIOS TRIBUTARIOS EN MINERÍA Y ENERGÍA SpA</p>
+              <h1 style="fontFamily:'Source Serif 4', serif; fontSize:{{ h1Size }}; lineHeight:1.08; fontWeight:600; margin:0 0 28px; letterSpacing:-0.015em; textWrap:pretty">Asesoría tributaria y corporativa para la industria minero-energética</h1>
+              <p style="fontSize:18px; lineHeight:1.65; color:#6F6B66; maxWidth:620px; margin:0 0 38px; textWrap:pretty">Acompañamos a compañías mineras, generadoras y family offices en la estructuración tributaria, el cumplimiento normativo y la planificación patrimonial, bajo el marco legal chileno vigente.</p>
+              <div style="display:flex; gap:14px; flexWrap:wrap">
+                <a href="#" onClick="{{ goAreas }}" style="background:#A32B2C; color:#FFFFFF; padding:16px 30px; fontSize:14px; letterSpacing:0.04em; textDecoration:none" style-hover="background:#7C2521; textDecoration:none">Áreas de práctica</a>
+                <a href="#" onClick="{{ goContacto }}" style="border:1px solid #1A1A1A; color:#1A1A1A; padding:16px 30px; fontSize:14px; letterSpacing:0.04em; textDecoration:none" style-hover="background:#1A1A1A; color:#FFFFFF; textDecoration:none">Contactar</a>
+              </div>
+            </div>
+            <div style="aspectRatio:8/5; overflow:hidden; background:#2B2B28">
+              <img src="assets/hero-mineria.jpg" alt="Faena minera de rajo abierto en la cordillera de los Andes" style="width:100%; height:100%; objectFit:cover; display:block" />
+            </div>
+          </div>
+        </section>
+
+        <section style="borderBottom:1px solid #E3E0DB">
+          <div style="maxWidth:1320px; margin:0 auto; padding:0 40px; display:grid; gridTemplateColumns:{{ gridFacts }}">
+            <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
+              <div style="padding:34px 30px 34px 0; borderRight:1px solid #E3E0DB">
+                <p style="fontFamily:'Source Serif 4', serif; fontSize:30px; margin:0 0 8px; fontWeight:600">{{ f.value }}</p>
+                <p style="fontSize:13px; color:#6F6B66; margin:0; lineHeight:1.5">{{ f.label }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+
+        <section style="maxWidth:1320px; margin:0 auto; padding:88px 40px">
+          <div style="display:flex; justifyContent:space-between; alignItems:flex-end; marginBottom:44px; borderBottom:1px solid #E3E0DB; paddingBottom:20px">
+            <h2 style="fontFamily:'Source Serif 4', serif; fontSize:34px; fontWeight:600; margin:0">Áreas de práctica</h2>
+            <a href="#" onClick="{{ goAreas }}" style="fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.12em">VER TODAS →</a>
+          </div>
+          <div style="display:grid; gridTemplateColumns:repeat(auto-fit, minmax(260px, 1fr)); gap:1px; background:#E3E0DB; border:1px solid #E3E0DB">
+            <sc-for list="{{ areas }}" as="a" hint-placeholder-count="7">
+              <a href="#" onClick="{{ a.go }}" style="background:#FFFFFF; padding:32px 30px 34px; textDecoration:none; color:#1A1A1A; display:flex; flexDirection:column; minHeight:210px" style-hover="background:#F4F3F0; textDecoration:none">
+                <span style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.16em; color:#A32B2C">{{ a.num }}</span>
+                <span style="fontFamily:'Source Serif 4', serif; fontSize:23px; fontWeight:600; margin:16px 0 12px; lineHeight:1.25">{{ a.name }}</span>
+                <span style="fontSize:14px; color:#6F6B66; lineHeight:1.6">{{ a.tagline }}</span>
+                <span style="marginTop:auto; paddingTop:22px; fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#A32B2C">CONOCER MÁS →</span>
+              </a>
+            </sc-for>
+            <a href="#" onClick="{{ goContacto }}" style="background:#2B2B28; color:#F4F3F0; padding:32px 30px 34px; textDecoration:none; display:flex; flexDirection:column; justifyContent:center; alignItems:flex-start; gap:14px; minHeight:210px" style-hover="background:#1A1A1A; textDecoration:none">
+              <span style="fontFamily:'Source Serif 4', serif; fontSize:23px; fontWeight:600; lineHeight:1.3">¿No sabe cuál de estas áreas cubre su caso?</span>
+              <span style="fontSize:14px; color:#C9C5BE; lineHeight:1.6">Escríbanos y un director revisará el encargo.</span>
+              <span style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#A32B2C">CONTACTAR →</span>
+            </a>
+          </div>
+        </section>
+
+        <section style="background:#2B2B28; color:#F4F3F0">
+          <div style="maxWidth:1320px; margin:0 auto; padding:80px 40px; display:grid; gridTemplateColumns:{{ gridSplit }}; gap:{{ gapWide }}; alignItems:center">
+            <div>
+              <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.18em; color:#A32B2C; margin:0 0 22px">INDUSTRIA</p>
+              <h2 style="fontFamily:'Source Serif 4', serif; fontSize:40px; fontWeight:600; margin:0 0 22px; lineHeight:1.15">Minería y Energía</h2>
+              <p style="fontSize:17px; lineHeight:1.7; color:#C9C5BE; margin:0 0 30px">Nuestras siete áreas de práctica convergen en un sector con reglas propias: royalty minero, depreciación de activos de larga vida, contratos de suministro eléctrico y estándares de cumplimiento exigidos por matrices extranjeras.</p>
+              <a href="#" onClick="{{ goIndustria }}" style="border:1px solid #F4F3F0; color:#F4F3F0; padding:15px 28px; fontSize:14px; textDecoration:none; display:inline-block" style-hover="background:#F4F3F0; color:#2B2B28; textDecoration:none">Ver página de industria</a>
+            </div>
+            <div style="aspectRatio:7/5; overflow:hidden; background:#1A1A1A">
+              <img src="assets/industria-faena.jpg" alt="Vista aérea de una operación minera con planta de proceso" loading="lazy" style="width:100%; height:100%; objectFit:cover; display:block" />
+            </div>
+          </div>
+        </section>
+
+        <section style="maxWidth:1320px; margin:0 auto; padding:88px 40px">
+          <div style="display:flex; justifyContent:space-between; alignItems:flex-end; marginBottom:44px; borderBottom:1px solid #E3E0DB; paddingBottom:20px">
+            <div>
+              <h2 style="fontFamily:'Source Serif 4', serif; fontSize:34px; fontWeight:600; margin:0 0 8px">Directorio</h2>
+              <p style="fontSize:14px; color:#6F6B66; margin:0">Cada director cuenta con una ficha propia: trayectoria, formación y contacto directo.</p>
+            </div>
+            <a href="#" onClick="{{ goEquipo }}" style="fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.12em">VER EQUIPO →</a>
+          </div>
+          <div style="display:grid; gridTemplateColumns:repeat(auto-fit, minmax(250px, 1fr)); gap:36px">
+            <sc-for list="{{ people }}" as="p" hint-placeholder-count="3">
+              <a href="#" onClick="{{ p.go }}" style="textDecoration:none; color:#1A1A1A; display:block" style-hover="textDecoration:none">
+                <div style="aspectRatio:4/5; background:#2B2B28; overflow:hidden">
+                  <img src="{{ p.photo }}" alt="{{ p.alt }}" loading="lazy" style="width:100%; height:100%; objectFit:cover; objectPosition:50% 22%; display:block" />
+                </div>
+                <p style="fontFamily:'Source Serif 4', serif; fontSize:22px; fontWeight:600; margin:20px 0 6px">{{ p.name }}</p>
+                <p style="fontSize:13px; color:#6F6B66; margin:0 0 12px">{{ p.role }}</p>
+                <p style="fontSize:14px; color:#1A1A1A; lineHeight:1.6; margin:0 0 16px">{{ p.short }}</p>
+                <span style="display:inline-flex; alignItems:center; gap:8px; fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#A32B2C; borderBottom:1px solid #A32B2C; paddingBottom:4px">VER PERFIL COMPLETO →</span>
+              </a>
+            </sc-for>
+          </div>
+        </section>
+
+        <sc-if value="{{ showCredentials }}" hint-placeholder-val="{{ true }}">
+          <section style="background:#F4F3F0; borderTop:1px solid #E3E0DB; borderBottom:1px solid #E3E0DB">
+            <div style="maxWidth:1320px; margin:0 auto; padding:72px 40px">
+              <h2 style="fontFamily:'Source Serif 4', serif; fontSize:28px; fontWeight:600; margin:0 0 10px">Credenciales y membresías</h2>
+              <p style="fontSize:15px; color:#6F6B66; margin:0 0 40px">Rankings, membresías gremiales y publicaciones. Estructura preparada para incorporar nuevos registros.</p>
+              <div style="display:grid; gridTemplateColumns:repeat(auto-fit, minmax(220px, 1fr)); gap:20px">
+                <sc-for list="{{ credentials }}" as="c" hint-placeholder-count="4">
+                  <div style="background:#FFFFFF; border:1px solid #E3E0DB; padding:26px 24px; minHeight:150px; display:flex; flexDirection:column">
+                    <span style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#A32B2C">{{ c.kind }}</span>
+                    <span style="fontFamily:'Source Serif 4', serif; fontSize:19px; margin:14px 0 8px; lineHeight:1.3">{{ c.title }}</span>
+                    <span style="fontSize:13px; color:#6F6B66; lineHeight:1.55; marginTop:auto">{{ c.note }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </section>
+        </sc-if>
+
+        <section style="maxWidth:1320px; margin:0 auto; padding:88px 40px">
+          <div style="display:flex; justifyContent:space-between; alignItems:flex-end; marginBottom:40px; borderBottom:1px solid #E3E0DB; paddingBottom:20px">
+            <h2 style="fontFamily:'Source Serif 4', serif; fontSize:34px; fontWeight:600; margin:0">Insights</h2>
+            <a href="#" onClick="{{ goInsights }}" style="fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.12em">TODAS LAS PUBLICACIONES →</a>
+          </div>
+          <div style="display:grid; gridTemplateColumns:repeat(auto-fit, minmax(260px, 1fr)); gap:40px">
+            <sc-for list="{{ homeInsights }}" as="i" hint-placeholder-count="3">
+              <article style="borderTop:2px solid #1A1A1A; paddingTop:20px">
+                <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#6F6B66; margin:0 0 14px">{{ i.date }} · {{ i.topic }}</p>
+                <h3 style="fontFamily:'Source Serif 4', serif; fontSize:21px; fontWeight:600; margin:0 0 12px; lineHeight:1.3">{{ i.title }}</h3>
+                <p style="fontSize:14px; color:#6F6B66; lineHeight:1.6; margin:0">{{ i.excerpt }}</p>
+              </article>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <!-- QUIÉNES SOMOS -->
+    <sc-if value="{{ isQuienes }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="borderBottom:1px solid #E3E0DB">
+          <div style="maxWidth:1320px; margin:0 auto; padding:72px 40px 60px">
+            <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.18em; color:#A32B2C; margin:0 0 20px">LA FIRMA</p>
+            <h1 style="fontFamily:'Source Serif 4', serif; fontSize:{{ pageH1Size }}; fontWeight:600; margin:0; maxWidth:900px; lineHeight:1.12">Un centro de estudios tributarios especializado en minería y energía</h1>
+          </div>
+        </div>
+        <div style="maxWidth:1320px; margin:0 auto; padding:72px 40px; display:grid; gridTemplateColumns:{{ gridAside }}; gap:{{ gapWide }}">
+          <div>
+            <sc-for list="{{ aboutParas }}" as="p" hint-placeholder-count="4">
+              <p style="fontSize:17px; lineHeight:1.75; margin:0 0 22px; maxWidth:760px; textWrap:pretty">{{ p.text }}</p>
+            </sc-for>
+            <h2 style="fontFamily:'Source Serif 4', serif; fontSize:26px; fontWeight:600; margin:48px 0 22px">Sello distintivo</h2>
+            <div style="display:grid; gridTemplateColumns:repeat(auto-fit, minmax(220px, 1fr)); gap:1px; background:#E3E0DB; border:1px solid #E3E0DB">
+              <sc-for list="{{ pillars }}" as="p" hint-placeholder-count="3">
+                <div style="background:#FFFFFF; padding:26px 24px">
+                  <p style="fontFamily:'Source Serif 4', serif; fontSize:19px; margin:0 0 10px; fontWeight:600">{{ p.title }}</p>
+                  <p style="fontSize:14px; color:#6F6B66; lineHeight:1.6; margin:0">{{ p.text }}</p>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <aside style="background:#F4F3F0; border:1px solid #E3E0DB; padding:30px 28px; alignSelf:flex-start">
+            <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#6F6B66; margin:0 0 20px">FICHA LEGAL</p>
+            <sc-for list="{{ legalRows }}" as="r" hint-placeholder-count="4">
+              <div style="paddingBottom:14px; marginBottom:14px; borderBottom:1px solid #E3E0DB">
+                <p style="fontSize:12px; color:#6F6B66; margin:0 0 4px">{{ r.k }}</p>
+                <p style="fontSize:14px; margin:0; lineHeight:1.5">{{ r.v }}</p>
+              </div>
+            </sc-for>
+          </aside>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- EQUIPO -->
+    <sc-if value="{{ isEquipo }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="borderBottom:1px solid #E3E0DB">
+          <div style="maxWidth:1320px; margin:0 auto; padding:72px 40px 60px">
+            <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.18em; color:#A32B2C; margin:0 0 20px">EQUIPO</p>
+            <h1 style="fontFamily:'Source Serif 4', serif; fontSize:{{ pageH1Size }}; fontWeight:600; margin:0 0 18px">Directorio de profesionales</h1>
+            <p style="fontSize:17px; color:#6F6B66; maxWidth:680px; margin:0">Tres directores con trayectoria en tributación, dirección de empresas y estrategia financiera aplicada al sector minero-energético.</p>
+          </div>
+        </div>
+        <div style="maxWidth:1320px; margin:0 auto; padding:64px 40px 90px; display:grid; gridTemplateColumns:repeat(auto-fit, minmax(230px, 1fr)); gap:32px">
+          <sc-for list="{{ people }}" as="p" hint-placeholder-count="3">
+            <a href="#" onClick="{{ p.go }}" style="textDecoration:none; color:#1A1A1A; border:1px solid #E3E0DB; display:block" style-hover="borderColor:#1A1A1A; textDecoration:none">
+              <div style="aspectRatio:4/5; background:#2B2B28; overflow:hidden">
+                <img src="{{ p.photo }}" alt="{{ p.alt }}" loading="lazy" style="width:100%; height:100%; objectFit:cover; objectPosition:50% 22%; display:block" />
+              </div>
+              <div style="padding:26px 24px 30px">
+                <p style="fontFamily:'Source Serif 4', serif; fontSize:23px; fontWeight:600; margin:0 0 6px">{{ p.name }}</p>
+                <p style="fontSize:13px; color:#6F6B66; margin:0 0 16px">{{ p.role }}</p>
+                <div style="display:flex; flexWrap:wrap; gap:8px; marginBottom:18px">
+                  <sc-for list="{{ p.tags }}" as="t" hint-placeholder-count="3">
+                    <span style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.08em; color:#6F6B66; border:1px solid #E3E0DB; padding:5px 9px">{{ t.text }}</span>
+                  </sc-for>
+                </div>
+                <p style="fontSize:14px; color:#1A1A1A; lineHeight:1.6; margin:0 0 20px">{{ p.short }}</p>
+                <span style="display:flex; justifyContent:space-between; alignItems:center; borderTop:1px solid #E3E0DB; paddingTop:16px; fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#A32B2C">
+                  <span>VER PERFIL COMPLETO</span>
+                  <span style="fontSize:13px">→</span>
+                </span>
+              </div>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- FICHA PERSONA -->
+    <sc-if value="{{ isPerson }}" hint-placeholder-val="{{ false }}">
+      <div style="maxWidth:1320px; margin:0 auto; padding:44px 40px 96px">
+        <a href="#" onClick="{{ goEquipo }}" style="fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.12em">← EQUIPO</a>
+        <div style="display:grid; gridTemplateColumns:{{ gridPerson }}; gap:{{ gapWide }}; marginTop:36px">
+          <div>
+            <div style="aspectRatio:4/5; maxWidth:380px; background:#2B2B28; overflow:hidden">
+              <div role="img" aria-label="{{ personAlt }}" style="width:100%; height:100%; backgroundImage:{{ personPhotoUrl }}; backgroundSize:cover; backgroundPosition:50% 20%"></div>
+            </div>
+            <div style="border:1px solid #E3E0DB; borderTop:none; padding:24px; maxWidth:380px">
+              <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#6F6B66; margin:0 0 14px">CONTACTO DIRECTO</p>
+              <p style="fontSize:14px; margin:0 0 8px"><a href="{{ person.mailto }}">{{ person.email }}</a></p>
+              <p style="fontSize:13px; color:#6F6B66; margin:0 0 18px; lineHeight:1.5">Av. Vitacura 2939, piso 11, of. 1101<br />Las Condes, Santiago</p>
+              <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#6F6B66; margin:0 0 8px">IDIOMAS</p>
+              <p style="fontSize:14px; margin:0 0 18px">{{ person.languages }}</p>
+              <sc-if value="{{ person.hasLinkedin }}" hint-placeholder-val="{{ false }}">
+                <div>
+                  <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#6F6B66; margin:0 0 8px">PERFIL PROFESIONAL</p>
+                  <p style="fontSize:14px; margin:0"><a href="{{ person.linkedin }}" target="_blank" rel="noopener">LinkedIn →</a></p>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+          <div>
+            <h1 style="fontFamily:'Source Serif 4', serif; fontSize:46px; fontWeight:600; margin:0 0 10px; lineHeight:1.1">{{ person.name }}</h1>
+            <p style="fontSize:16px; color:#6F6B66; margin:0 0 26px">{{ person.role }}</p>
+            <div style="display:flex; flexWrap:wrap; gap:8px; marginBottom:34px">
+              <sc-for list="{{ person.tags }}" as="t" hint-placeholder-count="3">
+                <span style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.08em; color:#1A1A1A; background:#F4F3F0; padding:6px 11px">{{ t.text }}</span>
+              </sc-for>
+            </div>
+            <sc-for list="{{ person.bio }}" as="b" hint-placeholder-count="3">
+              <p style="fontSize:17px; lineHeight:1.75; margin:0 0 20px; maxWidth:740px; textWrap:pretty">{{ b.text }}</p>
+            </sc-for>
+            <h2 style="fontFamily:'Source Serif 4', serif; fontSize:22px; fontWeight:600; margin:42px 0 16px">Formación</h2>
+            <ul style="margin:0 0 42px; padding:0; listStyle:none; display:flex; flexDirection:column; gap:10px">
+              <sc-for list="{{ person.education }}" as="e" hint-placeholder-count="2">
+                <li style="fontSize:15px; color:#1A1A1A; paddingLeft:18px; borderLeft:2px solid #A32B2C; lineHeight:1.5">{{ e.text }}</li>
+              </sc-for>
+            </ul>
+            <sc-if value="{{ person.hasPublications }}" hint-placeholder-val="{{ false }}">
+              <div style="marginBottom:42px">
+                <h2 style="fontFamily:'Source Serif 4', serif; fontSize:22px; fontWeight:600; margin:0 0 16px">Publicaciones seleccionadas</h2>
+                <ul style="margin:0; padding:0; listStyle:none; display:flex; flexDirection:column; gap:10px">
+                  <sc-for list="{{ person.publications }}" as="pub" hint-placeholder-count="3">
+                    <li style="fontSize:15px; color:#1A1A1A; paddingLeft:18px; borderLeft:2px solid #E3E0DB; lineHeight:1.55">{{ pub.text }}</li>
+                  </sc-for>
+                </ul>
+              </div>
+            </sc-if>
+            <sc-if value="{{ person.hasHonor }}" hint-placeholder-val="{{ false }}">
+              <div style="marginBottom:42px; background:#F4F3F0; border:1px solid #E3E0DB; padding:22px 24px">
+                <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#6F6B66; margin:0 0 8px">RECONOCIMIENTO</p>
+                <p style="fontFamily:'Source Serif 4', serif; fontSize:19px; margin:0">{{ person.honor }}</p>
+              </div>
+            </sc-if>
+            <sc-if value="{{ person.hasAreas }}" hint-placeholder-val="{{ false }}">
+              <div>
+                <h2 style="fontFamily:'Source Serif 4', serif; fontSize:22px; fontWeight:600; margin:0 0 16px">Áreas que lidera</h2>
+                <div style="display:grid; gridTemplateColumns:repeat(auto-fit, minmax(220px, 1fr)); gap:1px; background:#E3E0DB; border:1px solid #E3E0DB">
+                  <sc-for list="{{ person.areas }}" as="a" hint-placeholder-count="2">
+                    <a href="#" onClick="{{ a.go }}" style="background:#FFFFFF; padding:22px 20px; textDecoration:none; color:#1A1A1A" style-hover="background:#F4F3F0; textDecoration:none">
+                      <span style="display:block; fontFamily:'Source Serif 4', serif; fontSize:18px; fontWeight:600">{{ a.name }}</span>
+                      <span style="display:block; fontSize:13px; color:#6F6B66; marginTop:6px; lineHeight:1.5">{{ a.tagline }}</span>
+                    </a>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ÍNDICE ÁREAS -->
+    <sc-if value="{{ isAreas }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="borderBottom:1px solid #E3E0DB">
+          <div style="maxWidth:1320px; margin:0 auto; padding:72px 40px 60px">
+            <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.18em; color:#A32B2C; margin:0 0 20px">PRÁCTICA</p>
+            <h1 style="fontFamily:'Source Serif 4', serif; fontSize:{{ pageH1Size }}; fontWeight:600; margin:0 0 18px">Áreas de práctica</h1>
+            <p style="fontSize:17px; color:#6F6B66; maxWidth:700px; margin:0">Siete áreas que operan de forma integrada sobre un mismo expediente: estructura societaria, carga tributaria, relación laboral y cumplimiento normativo.</p>
+          </div>
+        </div>
+        <div style="maxWidth:1320px; margin:0 auto; padding:56px 40px 96px">
+          <sc-for list="{{ areas }}" as="a" hint-placeholder-count="7">
+            <a href="#" onClick="{{ a.go }}" style="display:grid; gridTemplateColumns:{{ gridAreaRow }}; gap:18px; alignItems:center; padding:30px 0; borderBottom:1px solid #E3E0DB; textDecoration:none; color:#1A1A1A" style-hover="background:#F4F3F0; textDecoration:none">
+              <span style="fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.14em; color:#A32B2C">{{ a.num }}</span>
+              <span>
+                <span style="display:block; fontFamily:'Source Serif 4', serif; fontSize:27px; fontWeight:600">{{ a.name }}</span>
+                <span style="display:block; fontSize:15px; color:#6F6B66; marginTop:8px; maxWidth:640px; lineHeight:1.6">{{ a.tagline }}</span>
+              </span>
+              <span style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.12em; color:#6F6B66; textAlign:right">{{ a.leadName }} →</span>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- FICHA ÁREA -->
+    <sc-if value="{{ isArea }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="background:#F4F3F0; borderBottom:1px solid #E3E0DB">
+          <div style="maxWidth:1320px; margin:0 auto; padding:44px 40px 64px">
+            <a href="#" onClick="{{ goAreas }}" style="fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.12em">← ÁREAS DE PRÁCTICA</a>
+            <h1 style="fontFamily:'Source Serif 4', serif; fontSize:{{ areaH1Size }}; fontWeight:600; margin:30px 0 16px; maxWidth:900px; lineHeight:1.1">{{ area.name }}</h1>
+            <p style="fontSize:19px; color:#6F6B66; maxWidth:760px; margin:0; lineHeight:1.6">{{ area.tagline }}</p>
+          </div>
+        </div>
+        <div style="maxWidth:1320px; margin:0 auto; padding:72px 40px; display:grid; gridTemplateColumns:{{ gridAreaBody }}; gap:{{ gapWide }}">
+          <div>
+            <sc-for list="{{ area.paras }}" as="p" hint-placeholder-count="3">
+              <p style="fontSize:17px; lineHeight:1.75; margin:0 0 22px; maxWidth:760px; textWrap:pretty">{{ p.text }}</p>
+            </sc-for>
+            <h2 style="fontFamily:'Source Serif 4', serif; fontSize:26px; fontWeight:600; margin:46px 0 20px">Alcance de servicios</h2>
+            <ul style="margin:0; padding:0; listStyle:none; display:flex; flexDirection:column; gap:1px; background:#E3E0DB; border:1px solid #E3E0DB">
+              <sc-for list="{{ area.services }}" as="s" hint-placeholder-count="5">
+                <li style="background:#FFFFFF; padding:18px 22px; fontSize:15px; lineHeight:1.6; display:flex; gap:16px">
+                  <span style="color:#A32B2C; fontFamily:'IBM Plex Mono', monospace; fontSize:12px">—</span>
+                  <span>{{ s.text }}</span>
+                </li>
+              </sc-for>
+            </ul>
+            <div style="marginTop:56px; background:#2B2B28; color:#F4F3F0; padding:44px 40px; display:flex; justifyContent:space-between; alignItems:center; gap:32px; flexWrap:wrap">
+              <p style="fontFamily:'Source Serif 4', serif; fontSize:27px; margin:0; maxWidth:560px; lineHeight:1.3">{{ area.cta }}</p>
+              <a href="#" onClick="{{ goContacto }}" style="background:#A32B2C; color:#FFFFFF; padding:15px 28px; fontSize:14px; textDecoration:none; whiteSpace:nowrap" style-hover="background:#7C2521; textDecoration:none">Escribir al equipo</a>
+            </div>
+          </div>
+          <aside style="alignSelf:flex-start">
+            <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#6F6B66; margin:0 0 16px">QUIÉN LIDERA ESTA ÁREA</p>
+            <a href="#" onClick="{{ area.leadGo }}" style="display:block; maxWidth:360px; border:1px solid #E3E0DB; textDecoration:none; color:#1A1A1A" style-hover="borderColor:#1A1A1A; textDecoration:none">
+              <div style="aspectRatio:4/5; background:#2B2B28; overflow:hidden">
+                <img src="{{ area.leadPhoto }}" alt="{{ area.leadAlt }}" loading="lazy" style="width:100%; height:100%; objectFit:cover; objectPosition:50% 15%; display:block" />
+              </div>
+              <div style="padding:22px 20px 26px">
+                <p style="fontFamily:'Source Serif 4', serif; fontSize:21px; fontWeight:600; margin:0 0 6px">{{ area.leadName }}</p>
+                <p style="fontSize:13px; color:#6F6B66; margin:0 0 16px">{{ area.leadRole }}</p>
+                <span style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#A32B2C">VER FICHA →</span>
+              </div>
+            </a>
+            <div style="marginTop:26px; maxWidth:360px; border:1px solid #E3E0DB; padding:22px 20px">
+              <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#6F6B66; margin:0 0 14px">OTRAS ÁREAS</p>
+              <div style="display:flex; flexDirection:column; gap:10px">
+                <sc-for list="{{ otherAreas }}" as="o" hint-placeholder-count="6">
+                  <a href="#" onClick="{{ o.go }}" style="fontSize:14px; color:#1A1A1A; textDecoration:none" style-hover="color:#A32B2C">{{ o.name }}</a>
+                </sc-for>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- INDUSTRIA -->
+    <sc-if value="{{ isIndustria }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="background:#2B2B28; color:#F4F3F0">
+          <div style="maxWidth:1320px; margin:0 auto; padding:80px 40px">
+            <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.18em; color:#A32B2C; margin:0 0 22px">INDUSTRIA</p>
+            <h1 style="fontFamily:'Source Serif 4', serif; fontSize:{{ industriaH1Size }}; fontWeight:600; margin:0 0 22px; maxWidth:900px; lineHeight:1.08">Minería y Energía</h1>
+            <p style="fontSize:19px; color:#C9C5BE; maxWidth:780px; margin:0; lineHeight:1.65">La industria extractiva y de generación opera bajo un régimen tributario, laboral y de cumplimiento propio. PRAXIA fue constituida para atender ese régimen de forma integrada.</p>
+          </div>
+        </div>
+        <div style="aspectRatio:24/7; overflow:hidden; background:#1A1A1A">
+          <img src="assets/hero-mineria.jpg" alt="Faena minera de rajo abierto en la cordillera de los Andes" style="width:100%; height:100%; objectFit:cover; display:block" />
+        </div>
+        <div style="maxWidth:1320px; margin:0 auto; padding:72px 40px">
+          <div style="display:grid; gridTemplateColumns:{{ gridHalf }}; gap:{{ gapWide }}; marginBottom:72px">
+            <div>
+              <sc-for list="{{ industryParas }}" as="p" hint-placeholder-count="3">
+                <p style="fontSize:17px; lineHeight:1.75; margin:0 0 20px; textWrap:pretty">{{ p.text }}</p>
+              </sc-for>
+            </div>
+            <div style="background:#F4F3F0; border:1px solid #E3E0DB; padding:34px 32px">
+              <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#6F6B66; margin:0 0 22px">MARCO NORMATIVO DE REFERENCIA</p>
+              <sc-for list="{{ norms }}" as="n" hint-placeholder-count="4">
+                <div style="paddingBottom:16px; marginBottom:16px; borderBottom:1px solid #E3E0DB">
+                  <p style="fontFamily:'Source Serif 4', serif; fontSize:18px; margin:0 0 6px">{{ n.title }}</p>
+                  <p style="fontSize:13px; color:#6F6B66; margin:0; lineHeight:1.55">{{ n.note }}</p>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <h2 style="fontFamily:'Source Serif 4', serif; fontSize:30px; fontWeight:600; margin:0 0 28px">Cómo cruzan nuestras áreas en este sector</h2>
+          <div style="display:grid; gridTemplateColumns:repeat(auto-fit, minmax(260px, 1fr)); gap:1px; background:#E3E0DB; border:1px solid #E3E0DB; marginBottom:80px">
+            <sc-for list="{{ areas }}" as="a" hint-placeholder-count="7">
+              <a href="#" onClick="{{ a.go }}" style="background:#FFFFFF; padding:28px 26px; textDecoration:none; color:#1A1A1A" style-hover="background:#F4F3F0; textDecoration:none">
+                <span style="display:block; fontFamily:'Source Serif 4', serif; fontSize:20px; fontWeight:600; marginBottom:10px">{{ a.name }}</span>
+                <span style="display:block; fontSize:14px; color:#6F6B66; lineHeight:1.6">{{ a.industryNote }}</span>
+              </a>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- INSIGHTS -->
+    <sc-if value="{{ isInsights }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="borderBottom:1px solid #E3E0DB">
+          <div style="maxWidth:1320px; margin:0 auto; padding:72px 40px 60px">
+            <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.18em; color:#A32B2C; margin:0 0 20px">PUBLICACIONES</p>
+            <h1 style="fontFamily:'Source Serif 4', serif; fontSize:{{ pageH1Size }}; fontWeight:600; margin:0 0 18px">Insights</h1>
+            <p style="fontSize:17px; color:#6F6B66; maxWidth:700px; margin:0">Análisis normativo y notas técnicas del equipo. Sección estructurada sobre un índice de datos: incorporar una publicación nueva no requiere rehacer la página.</p>
+          </div>
+        </div>
+        <div style="maxWidth:1320px; margin:0 auto; padding:56px 40px 96px">
+          <sc-for list="{{ insights }}" as="i" hint-placeholder-count="5">
+            <article style="display:grid; gridTemplateColumns:{{ gridInsightRow }}; gap:14px; padding:30px 0; borderBottom:1px solid #E3E0DB; alignItems:baseline">
+              <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.12em; color:#6F6B66; margin:0">{{ i.date }}</p>
+              <div>
+                <h2 style="fontFamily:'Source Serif 4', serif; fontSize:25px; fontWeight:600; margin:0 0 10px; lineHeight:1.3">{{ i.title }}</h2>
+                <p style="fontSize:15px; color:#6F6B66; margin:0; maxWidth:680px; lineHeight:1.65">{{ i.excerpt }}</p>
+              </div>
+              <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.12em; color:#A32B2C; margin:0; textAlign:right">{{ i.status }}</p>
+            </article>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- CONTACTO -->
+    <sc-if value="{{ isContacto }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="borderBottom:1px solid #E3E0DB">
+          <div style="maxWidth:1320px; margin:0 auto; padding:72px 40px 60px">
+            <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.18em; color:#A32B2C; margin:0 0 20px">CONTACTO</p>
+            <h1 style="fontFamily:'Source Serif 4', serif; fontSize:{{ pageH1Size }}; fontWeight:600; margin:0 0 18px">Conversemos sobre su caso</h1>
+            <p style="fontSize:17px; color:#6F6B66; maxWidth:660px; margin:0">Indique el área de interés y un director del equipo responderá directamente.</p>
+          </div>
+        </div>
+        <div style="maxWidth:1320px; margin:0 auto; padding:64px 40px 96px; display:grid; gridTemplateColumns:{{ gridContact }}; gap:{{ gapWide }}">
+          <form onSubmit="{{ onSubmit }}" style="display:flex; flexDirection:column; gap:26px; maxWidth:660px">
+            <label style="display:flex; flexDirection:column; gap:8px">
+              <span style="fontSize:13px; color:#6F6B66">Nombre y apellido *</span>
+              <input value="{{ form.name }}" onChange="{{ onName }}" style="border:1px solid #E3E0DB; padding:14px 16px; fontSize:15px; fontFamily:'IBM Plex Sans', sans-serif; background:#FFFFFF" />
+            </label>
+            <label style="display:flex; flexDirection:column; gap:8px">
+              <span style="fontSize:13px; color:#6F6B66">Empresa u organización</span>
+              <input value="{{ form.company }}" onChange="{{ onCompany }}" style="border:1px solid #E3E0DB; padding:14px 16px; fontSize:15px; fontFamily:'IBM Plex Sans', sans-serif; background:#FFFFFF" />
+            </label>
+            <label style="display:flex; flexDirection:column; gap:8px">
+              <span style="fontSize:13px; color:#6F6B66">Correo electrónico *</span>
+              <input value="{{ form.email }}" onChange="{{ onEmail }}" type="email" style="border:1px solid #E3E0DB; padding:14px 16px; fontSize:15px; fontFamily:'IBM Plex Sans', sans-serif; background:#FFFFFF" />
+            </label>
+            <label style="display:flex; flexDirection:column; gap:8px">
+              <span style="fontSize:13px; color:#6F6B66">Área de interés *</span>
+              <select value="{{ form.area }}" onChange="{{ onArea }}" style="border:1px solid #E3E0DB; padding:14px 16px; fontSize:15px; fontFamily:'IBM Plex Sans', sans-serif; background:#FFFFFF">
+                <option value="">Seleccione un área</option>
+                <sc-for list="{{ areas }}" as="a" hint-placeholder-count="7">
+                  <option value="{{ a.name }}">{{ a.name }}</option>
+                </sc-for>
+                <option value="Otro">Otro</option>
+              </select>
+            </label>
+            <label style="display:flex; flexDirection:column; gap:8px">
+              <span style="fontSize:13px; color:#6F6B66">Mensaje *</span>
+              <textarea value="{{ form.message }}" onChange="{{ onMessage }}" rows="6" style="border:1px solid #E3E0DB; padding:14px 16px; fontSize:15px; fontFamily:'IBM Plex Sans', sans-serif; background:#FFFFFF; resize:vertical"></textarea>
+            </label>
+            <sc-if value="{{ formError }}" hint-placeholder-val="{{ false }}">
+              <p style="fontSize:14px; color:#A32B2C; margin:0">{{ formError }}</p>
+            </sc-if>
+            <sc-if value="{{ formSent }}" hint-placeholder-val="{{ false }}">
+              <p style="fontSize:14px; color:#1A1A1A; background:#F4F3F0; border:1px solid #E3E0DB; padding:16px; margin:0">Mensaje registrado. El equipo responderá al correo indicado dentro de los próximos días hábiles.</p>
+            </sc-if>
+            <div>
+              <button type="submit" style="background:#A32B2C; color:#FFFFFF; border:none; padding:16px 34px; fontSize:14px; letterSpacing:0.04em; cursor:pointer; fontFamily:'IBM Plex Sans', sans-serif" style-hover="background:#7C2521">{{ submitLabel }}</button>
+            </div>
+          </form>
+          <aside>
+            <div style="background:#F4F3F0; border:1px solid #E3E0DB; padding:30px 28px; marginBottom:24px">
+              <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.14em; color:#6F6B66; margin:0 0 20px">OFICINA</p>
+              <p style="fontSize:15px; lineHeight:1.7; margin:0 0 20px">Av. Vitacura 2939, piso 11, oficina 1101<br />Las Condes, Región Metropolitana<br />Santiago, Chile</p>
+              <p style="fontSize:15px; margin:0 0 8px"><a href="mailto:contacto@praxia.com">contacto@praxia.com</a></p>
+              <p style="fontSize:15px; margin:0; color:#6F6B66">Teléfono: <span style="fontFamily:'IBM Plex Mono', monospace; fontSize:13px; background:#FFFFFF; border:1px dashed #A32B2C; padding:2px 8px; color:#A32B2C">[COMPLETAR]</span></p>
+            </div>
+            <div style="aspectRatio:14/9; overflow:hidden; border:1px solid #E3E0DB; background:#F4F3F0">
+              <img src="assets/energia-chile.jpg" alt="Parque solar y eólico en el norte de Chile" loading="lazy" style="width:100%; height:100%; objectFit:cover; display:block" />
+            </div>
+            <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.12em; color:#6F6B66; margin:12px 0 0">[ PENDIENTE · reemplazar por mapa de ubicación ]</p>
+          </aside>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- LEGAL -->
+    <sc-if value="{{ isLegal }}" hint-placeholder-val="{{ false }}">
+      <div style="maxWidth:820px; margin:0 auto; padding:72px 40px 96px">
+        <h1 style="fontFamily:'Source Serif 4', serif; fontSize:40px; fontWeight:600; margin:0 0 24px">{{ legalTitle }}</h1>
+        <sc-for list="{{ legalBody }}" as="p" hint-placeholder-count="3">
+          <p style="fontSize:16px; lineHeight:1.75; color:#1A1A1A; margin:0 0 20px">{{ p.text }}</p>
+        </sc-for>
+      </div>
+    </sc-if>
+
+  </main>
+
+  <footer style="background:#2B2B28; color:#C9C5BE; marginTop:auto">
+    <div style="maxWidth:1320px; margin:0 auto; padding:70px 40px 30px; display:grid; gridTemplateColumns:{{ gridFooter }}; gap:40px">
+      <div>
+        <p style="fontFamily:'Source Serif 4', serif; fontSize:24px; fontWeight:700; letterSpacing:0.14em; color:#F4F3F0; margin:0 0 16px">PRAXIA</p>
+        <p style="fontSize:13px; lineHeight:1.7; margin:0 0 18px">Centro de Estudios Tributarios en Minería y Energía SpA<br />RUT 78.471.797-6</p>
+        <p style="fontSize:13px; lineHeight:1.7; margin:0">Av. Vitacura 2939, piso 11, of. 1101<br />Las Condes, Región Metropolitana</p>
+      </div>
+      <div>
+        <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.16em; color:#7A766F; margin:0 0 18px">FIRMA</p>
+        <div style="display:flex; flexDirection:column; gap:11px">
+          <a href="#" onClick="{{ goQuienes }}" style="color:#C9C5BE; fontSize:14px; textDecoration:none" style-hover="color:#FFFFFF">Quiénes somos</a>
+          <a href="#" onClick="{{ goEquipo }}" style="color:#C9C5BE; fontSize:14px; textDecoration:none" style-hover="color:#FFFFFF">Equipo</a>
+          <a href="#" onClick="{{ goIndustria }}" style="color:#C9C5BE; fontSize:14px; textDecoration:none" style-hover="color:#FFFFFF">Minería y Energía</a>
+          <a href="#" onClick="{{ goInsights }}" style="color:#C9C5BE; fontSize:14px; textDecoration:none" style-hover="color:#FFFFFF">Insights</a>
+          <a href="#" onClick="{{ goContacto }}" style="color:#C9C5BE; fontSize:14px; textDecoration:none" style-hover="color:#FFFFFF">Contacto</a>
+        </div>
+      </div>
+      <div>
+        <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.16em; color:#7A766F; margin:0 0 18px">ÁREAS DE PRÁCTICA</p>
+        <div style="display:flex; flexDirection:column; gap:11px">
+          <sc-for list="{{ areas }}" as="a" hint-placeholder-count="7">
+            <a href="#" onClick="{{ a.go }}" style="color:#C9C5BE; fontSize:14px; textDecoration:none" style-hover="color:#FFFFFF">{{ a.name }}</a>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.16em; color:#7A766F; margin:0 0 18px">CONTACTO</p>
+        <div style="display:flex; flexDirection:column; gap:11px; marginBottom:26px">
+          <a href="mailto:contacto@praxia.com" style="color:#C9C5BE; fontSize:14px; textDecoration:none" style-hover="color:#FFFFFF">contacto@praxia.com</a>
+          <span style="fontSize:14px; color:#7A766F">Teléfono: [completar]</span>
+          <a href="https://www.linkedin.com" style="color:#C9C5BE; fontSize:14px; textDecoration:none" style-hover="color:#FFFFFF">LinkedIn</a>
+        </div>
+        <p style="fontFamily:'IBM Plex Mono', monospace; fontSize:10px; letterSpacing:0.16em; color:#7A766F; margin:0 0 14px">LEGAL</p>
+        <div style="display:flex; flexDirection:column; gap:11px">
+          <a href="#" onClick="{{ goAviso }}" style="color:#C9C5BE; fontSize:14px; textDecoration:none" style-hover="color:#FFFFFF">Aviso legal</a>
+          <a href="#" onClick="{{ goPrivacidad }}" style="color:#C9C5BE; fontSize:14px; textDecoration:none" style-hover="color:#FFFFFF">Política de privacidad</a>
+        </div>
+      </div>
+    </div>
+    <div style="maxWidth:1320px; margin:0 auto; padding:22px 40px 36px; borderTop:1px solid #4A4844; display:flex; justifyContent:space-between; alignItems:center; gap:28px; flexWrap:wrap; fontFamily:'IBM Plex Mono', monospace; fontSize:11px; letterSpacing:0.12em; color:#ABA69E">
+      <span>© 2026 CENTRO DE ESTUDIOS TRIBUTARIOS EN MINERÍA Y ENERGÍA SpA · RUT 78.471.797-6</span>
+      <div style="display:flex; alignItems:center; gap:18px; flexWrap:wrap">
+        <a href="#" onClick="{{ goAviso }}" style="color:#C9C5BE; textDecoration:none; letterSpacing:0.12em" style-hover="color:#F4F3F0">AVISO LEGAL</a>
+        <span style="color:#4A4844">·</span>
+        <a href="#" onClick="{{ goPrivacidad }}" style="color:#C9C5BE; textDecoration:none; letterSpacing:0.12em" style-hover="color:#F4F3F0">PRIVACIDAD</a>
+        <span style="color:#4A4844">·</span>
+        <a href="mailto:contacto@praxia.com" style="color:#C9C5BE; textDecoration:none; letterSpacing:0.12em" style-hover="color:#F4F3F0">CONTACTO@PRAXIA.COM</a>
+        <span style="color:#4A4844">·</span>
+        <span>SANTIAGO, CHILE</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCredentials&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Home&quot;},&quot;homeInsightsCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:3,&quot;min&quot;:2,&quot;max&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Home&quot;}}">
+const P = t => ({ text: t });
+
+const PEOPLE = [
+  {
+    slug: "manuel-viera-flores", name: "Manuel Viera Flores", initials: "MV", photo: "assets/manuel-viera-flores.jpg",
+    role: "Director · Ph.D. en Economía Minera y Finanzas · Presidente de la Cámara Minera de Chile",
+    short: "Fundador y presidente de la Cámara Minera de Chile y CEO de Metaproject. Aporta criterio sectorial, opinión experta y vinculación institucional con la industria.",
+    email: "mviera@praxia.com", languages: "Español · Inglés · Portugués",
+    linkedin: "https://www.linkedin.com/in/manuelvieraf/",
+    tags: ["Economía minera", "Valorización de activos", "Evaluación de proyectos", "Gestión de riesgo", "Política sectorial"],
+    bio: [
+      "Manuel Viera Flores es Director de PRAXIA. Desde 1992 es CEO y Managing Partner de Metaproject, compañía de ingeniería multidisciplinaria con operaciones en Chile, Perú, Ecuador y Colombia, y desde 2019 es fundador y primer Presidente de la Cámara Minera de Chile y preside el comité chileno del World Mining Congress.",
+      "Su trayectoria en la industria supera los cuarenta años en dirección de operaciones, planificación minera y evaluación de proyectos. Fue superintendente de Ingeniería Industrial y desarrollo de proyectos de inversión en Codelco Andina (1989–1992), consultor senior de planificación y valorización en RTZ Consultores (1988–1990), ingeniero de minas senior en Cía. Minera El Indio (1984–1988) y superintendente de operaciones en Cía. Minera Santa Rita (1977–1979).",
+      "En gobierno corporativo fue director de Cía. Minera Carmen de Andacollo, de Teck (7 años), director de la Empresa Nacional de Minería, ENAMI (7 años), presidente del directorio de Cía. Minera Panulcillo (7 años) y director del Instituto de Ingenieros de Minas de Chile (18 años).",
+      "Es Qualified Person para la certificación de recursos y reservas bajo los códigos NI 43-101, JORC y VALMIN, y especialista en valorización de activos mineros mediante opciones reales y simulación de Monte Carlo bajo riesgo e incertidumbre.",
+      "En PRAXIA no conduce áreas de práctica: su rol es de criterio sectorial y relación institucional. Aporta la lectura de industria sobre cada encargo —qué implica una estructura determinada para una faena en operación, cómo se comporta frente al royalty y qué exposición genera ante la autoridad— y la vinculación de la firma con el ecosistema minero-energético. Fue profesor de las escuelas de minas de la Universidad de Chile y de la Universidad de Santiago, y de programas de posgrado de la Pontificia Universidad Católica de Chile; dirigió la Escuela de Minas de la Universidad de las Américas entre 2012 y 2020, y presidió la Cámara Chileno Polaca de Comercio entre 2018 y 2021."
+    ],
+    publications: [
+      "Enfoque pragmático a la tasación económica de yacimientos",
+      "Evaluación económica de un proyecto de inversiones mediante simulación de Montecarlo, bajo riesgo e incertidumbre",
+      "Computerized model for the optimization of blasting patterns in tunnels",
+      "Simulación computarizada en operaciones carguío-transporte en operaciones subterráneas con LHD"
+    ],
+    honor: "Premio a la Excelencia Profesional",
+    education: [
+      "Ph.D. en Finanzas y Economía Mineral, Universidad Autónoma de Madrid",
+      "MSc en Ingeniería Industrial, Universidad de Chile",
+      "Ingeniero de Minas, Universidad de Santiago de Chile",
+      "Qualified Person — códigos NI 43-101, JORC y VALMIN",
+      "Miembro del Project Management Institute, Chile Chapter"
+    ],
+    areaSlugs: []
+  },
+  {
+    slug: "manuel-berrios", name: "Manuel Berríos", initials: "MB", photo: "assets/manuel-berrios.jpg",
+    role: "Director · Abogado, LLM en Tributación (University of Chicago)",
+    short: "Abogado UAH, Tax LLM de la Universidad de Chicago y director de empresas. Encabeza las materias tributarias, corporativas y de planificación patrimonial.",
+    email: "mberrios@praxia.com", languages: "Español · Inglés",
+    tags: ["Tributación corporativa", "Reorganizaciones", "Compliance", "Planificación patrimonial", "Gobierno corporativo"],
+    bio: [
+      "Manuel Berríos es Director de PRAXIA, abogado de la Universidad Alberto Hurtado y director de empresas. Concentra el trabajo técnico de la firma en estructuración fiscal, reorganizaciones societarias, cumplimiento normativo y planificación patrimonial familiar.",
+      "Su formación combina tributación y compliance en tres jurisdicciones: Tax LLM en la Universidad de Chicago, Magíster en Tributación Corporativa en la Universidad Mayor, el programa Core International Business de Harvard University y una Maestría en Compliance en el Centro de Investigación y Desarrollo Crimint. Esa base le permite trabajar tanto la norma chilena como los estándares que exigen matrices e inversionistas extranjeros.",
+      "Su práctica parte del funcionamiento real de la compañía: la estructura que se propone debe poder ejecutarse, documentarse y sostenerse ante una fiscalización del Servicio de Impuestos Internos.",
+      "Asesora a grupos empresariales y family offices en reorganizaciones y procesos de sucesión, coordinando el diseño tributario con las estructuras societarias existentes y con los asesores contables y financieros de cada grupo.",
+      "En su rol de director de empresas participa además en la discusión de gobierno corporativo, política de distribución de resultados y modelos de prevención de delitos bajo la Ley N° 20.393."
+    ],
+    education: [
+      "Abogado, Universidad Alberto Hurtado",
+      "Tax LLM, University of Chicago",
+      "Magíster en Tributación Corporativa, Universidad Mayor",
+      "Core International Business, Harvard University",
+      "Maestría en Compliance, Centro de Investigación y Desarrollo Crimint"
+    ],
+    areaSlugs: ["optimizacion-tributaria", "derecho-laboral", "ley-karin", "derecho-corporativo", "compliance", "planificacion-de-herencia"]
+  },
+  {
+    slug: "diego-delgado", name: "Diego Delgado", initials: "DD", photo: "assets/diego-delgado.jpg",
+    role: "Director · Ingeniero civil industrial UC · Inteligencia artificial y gestión documental",
+    short: "Lidera la aplicación de inteligencia artificial y la gestión documental de los expedientes, además del análisis financiero de cada estructura.",
+    email: "ddelgado@praxia.com", languages: "Español · Inglés",
+    linkedin: "https://www.linkedin.com/in/diego-delgado-dom%C3%ADnguez-4733072a4/",
+    tags: ["Inteligencia artificial", "Gestión documental", "Análisis financiero", "Estrategia", "Compliance"],
+    bio: [
+      "Diego Delgado es Director de PRAXIA, ingeniero civil industrial de la Pontificia Universidad Católica de Chile, con experiencia en análisis financiero, inteligencia artificial aplicada y estrategia corporativa.",
+      "Conduce la incorporación de inteligencia artificial al trabajo de la firma: revisión asistida de contratos y documentación societaria, extracción estructurada de datos desde expedientes extensos y detección temprana de inconsistencias entre lo declarado y lo respaldado. La herramienta acelera la revisión; la decisión técnica sigue siendo de los directores.",
+      "Dirige además la gestión documental de cada encargo. Cada estructura tributaria, cada modelo de prevención de delitos y cada proceso laboral se sostienen en el respaldo que exista al momento de la fiscalización, por lo que la firma mantiene los expedientes indexados, versionados y trazables desde su origen.",
+      "Aporta la capa cuantitativa del trabajo: modelamiento del efecto financiero de una estructura, evaluación de escenarios y construcción de indicadores para el seguimiento de programas de cumplimiento.",
+      "Trabaja de forma conjunta con el área tributaria para que cada recomendación esté respaldada por un número verificable y por un documento localizable, y no solo por una lectura normativa."
+    ],
+    education: [
+      "Ingeniería Civil Industrial, Pontificia Universidad Católica de Chile",
+      "Formación en análisis financiero y ciencia de datos aplicada",
+      "Formación en inteligencia artificial aplicada a procesos documentales"
+    ],
+    areaSlugs: ["optimizacion-de-capital", "compliance"]
+  }
+];
+
+const AREAS = [
+  {
+    slug: "optimizacion-tributaria", num: "01", name: "Optimización tributaria",
+    tagline: "Estructuración de la carga impositiva dentro del marco legal vigente, con foco en operaciones intensivas en capital.",
+    lead: "manuel-berrios",
+    industryNote: "Tratamiento del royalty minero, depreciación acelerada de activos de larga vida y créditos por gastos en exploración.",
+    cta: "Conversemos sobre la estructura tributaria de su operación.",
+    paras: [
+      "Analizamos la situación tributaria de la compañía o del grupo empresarial y proponemos una estructura que reduzca la carga impositiva dentro de los márgenes que permite la legislación chilena, sin exponer al contribuyente ante la autoridad fiscalizadora.",
+      "El trabajo parte del diagnóstico de la operación real —contratos, activos, flujos entre relacionadas— y no de un modelo genérico. Cada recomendación se acompaña de su fundamento normativo y de la estimación del efecto financiero asociado.",
+      "Acompañamos además la implementación y la defensa posterior de la estructura frente a requerimientos del Servicio de Impuestos Internos."
+    ],
+    services: [
+      "Diagnóstico integral de la situación tributaria de la empresa o grupo",
+      "Diseño de estructuras eficientes de tributación conforme a la normativa vigente",
+      "Revisión de operaciones entre partes relacionadas y precios de transferencia",
+      "Análisis de regímenes especiales aplicables al sector minero y energético",
+      "Preparación de respuestas a requerimientos y fiscalizaciones",
+      "Evaluación del efecto tributario de proyectos de inversión antes de su ejecución"
+    ]
+  },
+  {
+    slug: "optimizacion-de-capital", num: "02", name: "Optimización de capital",
+    tagline: "Estructura de financiamiento, uso de activos y asignación de recursos con impacto tributario y financiero medido.",
+    lead: "diego-delgado",
+    industryNote: "Estructura de financiamiento de proyectos de larga maduración y tratamiento de CAPEX en faena.",
+    cta: "Conversemos sobre la estructura de capital de su proyecto.",
+    paras: [
+      "Evaluamos la estructura de capital de la compañía para identificar dónde el financiamiento, la tenencia de activos o la distribución de resultados están generando un costo evitable, tributario o financiero.",
+      "El análisis integra modelamiento cuantitativo con la revisión jurídica de los instrumentos utilizados, de modo que la recomendación sea ejecutable en los términos contractuales existentes.",
+      "Aplica de forma particular a proyectos de inversión de larga maduración, donde la decisión de estructura se toma años antes de la generación de flujo."
+    ],
+    services: [
+      "Análisis de la estructura de financiamiento y su efecto tributario",
+      "Modelamiento financiero de escenarios de inversión y distribución",
+      "Revisión del tratamiento de activos fijos y su depreciación",
+      "Evaluación de alternativas de aporte, préstamo y capitalización entre relacionadas",
+      "Definición de indicadores de seguimiento para la administración"
+    ]
+  },
+  {
+    slug: "derecho-laboral", num: "03", name: "Derecho laboral",
+    tagline: "Relación laboral individual y colectiva en operaciones con turnos, faenas y contratistas.",
+    lead: "manuel-berrios",
+    industryNote: "Sistemas excepcionales de jornada, subcontratación en faena y negociación colectiva en operaciones continuas.",
+    cta: "Conversemos sobre su relación laboral y de contratistas.",
+    paras: [
+      "Asesoramos en la gestión de la relación laboral en entornos operativos exigentes: sistemas excepcionales de distribución de jornada, trabajo en faena, régimen de subcontratación y relación con empresas de servicios transitorios.",
+      "Intervenimos tanto en la etapa preventiva —contratos, reglamento interno, protocolos— como en la contingencia: fiscalizaciones de la Dirección del Trabajo, término de contratos y procesos judiciales.",
+      "El enfoque es documental: la posición de la empresa se sostiene con el respaldo que existía antes del conflicto, no con el que se construye después."
+    ],
+    services: [
+      "Elaboración y revisión de contratos individuales y reglamento interno",
+      "Autorización y control de sistemas excepcionales de jornada",
+      "Asesoría en régimen de subcontratación y suministro de personal",
+      "Acompañamiento en fiscalizaciones de la Dirección del Trabajo",
+      "Negociación colectiva y relación con organizaciones sindicales",
+      "Defensa en juicios laborales y procedimientos de tutela"
+    ]
+  },
+  {
+    slug: "derecho-corporativo", num: "04", name: "Derecho corporativo",
+    tagline: "Constitución, reorganización y gobierno de sociedades, con foco en la trazabilidad de las decisiones.",
+    lead: "manuel-berrios",
+    industryNote: "Vehículos de proyecto, joint ventures y estructuras de holding para activos mineros y de generación.",
+    cta: "Conversemos sobre la estructura societaria de su grupo.",
+    paras: [
+      "Acompañamos la constitución y reorganización de sociedades, la redacción de pactos de accionistas y la formalización del gobierno corporativo, de modo que la estructura societaria responda a la operación y no al revés.",
+      "Trabajamos habitualmente sobre estructuras que combinan sociedades operativas, vehículos de proyecto y holdings familiares, cuidando la coherencia tributaria del conjunto.",
+      "Incluye la preparación de la documentación societaria que exigen los procesos de due diligence, financiamiento bancario y entrada de nuevos socios."
+    ],
+    services: [
+      "Constitución de sociedades y vehículos de proyecto",
+      "Reorganizaciones societarias: fusiones, divisiones y transformaciones",
+      "Redacción y revisión de pactos de accionistas y estatutos",
+      "Formalización de gobierno corporativo y actas de directorio",
+      "Due diligence societario y preparación de documentación para financiamiento",
+      "Contratos entre partes relacionadas y su respaldo formal"
+    ]
+  },
+  {
+    slug: "compliance", num: "05", name: "Compliance",
+    tagline: "Modelos de prevención de delitos bajo la Ley N° 20.393 y estándares exigidos por matrices e inversionistas.",
+    lead: "diego-delgado",
+    industryNote: "Exigencias de casas matrices extranjeras y de la banca de proyecto sobre operaciones en Chile.",
+    cta: "Conversemos sobre su modelo de prevención de delitos.",
+    paras: [
+      "Diseñamos e implementamos modelos de prevención de delitos conforme a la Ley N° 20.393 sobre responsabilidad penal de las personas jurídicas, incorporando las ampliaciones de catálogo introducidas por la legislación posterior.",
+      "El modelo se construye sobre el mapa de riesgos real de la operación: proveedores, permisos, relación con autoridad, manejo de efectivo y contratación de terceros en faena.",
+      "Incluye la definición de indicadores y evidencia de funcionamiento, elemento que resulta determinante ante una eventual imputación o ante la revisión de una matriz extranjera."
+    ],
+    services: [
+      "Diagnóstico y mapa de riesgos penales de la organización",
+      "Diseño e implementación del modelo de prevención de delitos (Ley N° 20.393)",
+      "Elaboración de códigos de ética, políticas y canales de denuncia",
+      "Capacitación a directorio, administración y personal en faena",
+      "Auditoría de funcionamiento y evidencia del modelo",
+      "Due diligence de integridad sobre proveedores y contrapartes"
+    ]
+  },
+  {
+    slug: "ley-karin", num: "06", name: "Ley Karin",
+    tagline: "Prevención, investigación y sanción del acoso laboral y sexual bajo la Ley N° 21.643.",
+    lead: "manuel-berrios",
+    industryNote: "Protocolos aplicables a faenas con régimen de turnos y campamentos, donde la convivencia excede la jornada.",
+    cta: "Conversemos sobre la implementación de la Ley N° 21.643 en su organización.",
+    paras: [
+      "La Ley N° 21.643 obliga a toda organización a contar con un protocolo de prevención del acoso laboral, sexual y de la violencia en el trabajo, y con un procedimiento de investigación con plazos y garantías definidas.",
+      "Acompañamos la elaboración del protocolo, su incorporación al reglamento interno y la capacitación de quienes deberán aplicarlo, incluyendo el rol de investigador.",
+      "Cuando la denuncia ya existe, conducimos o revisamos la investigación para que el procedimiento resista una revisión posterior de la Dirección del Trabajo o de un tribunal."
+    ],
+    services: [
+      "Elaboración del protocolo de prevención conforme a la Ley N° 21.643",
+      "Adecuación del reglamento interno de orden, higiene y seguridad",
+      "Diseño del procedimiento de investigación y sus plazos",
+      "Capacitación a jefaturas e investigadores designados",
+      "Conducción o revisión externa de investigaciones en curso",
+      "Acompañamiento ante la Dirección del Trabajo"
+    ]
+  },
+  {
+    slug: "planificacion-de-herencia", num: "07", name: "Planificación de herencia",
+    tagline: "Ordenamiento patrimonial y sucesorio de grupos familiares con participación en sociedades operativas.",
+    lead: "manuel-berrios",
+    industryNote: "Sucesión en grupos familiares con participación en concesiones, faenas y sociedades de servicios.",
+    cta: "Conversemos sobre el ordenamiento patrimonial de su familia.",
+    paras: [
+      "Estructuramos el traspaso patrimonial entre generaciones considerando de forma conjunta la normativa sucesoria, el impuesto a las herencias y la estructura societaria en la que el patrimonio está radicado.",
+      "El objetivo es que la sucesión no obligue a desarmar la operación: se define con anticipación quién administra, cómo se distribuyen los frutos y qué ocurre ante la salida de un integrante del grupo.",
+      "El trabajo incorpora la redacción de los instrumentos necesarios y la coordinación con los asesores financieros y contables de la familia."
+    ],
+    services: [
+      "Diagnóstico patrimonial y societario del grupo familiar",
+      "Diseño de la estructura de traspaso y su efecto en el impuesto a las herencias",
+      "Constitución de sociedades de inversión y vehículos familiares",
+      "Redacción de pactos familiares y protocolos de sucesión",
+      "Coordinación con asesores contables y financieros",
+      "Acompañamiento en la posesión efectiva y trámites sucesorios"
+    ]
+  }
+];
+
+const INSIGHTS = [
+  { date: "PRÓXIMAMENTE", topic: "TRIBUTARIO", title: "Royalty minero: efecto en la carga efectiva de operaciones medianas", excerpt: "Nota técnica en preparación sobre el impacto del régimen de royalty en la tributación total de faenas de escala media.", status: "EN PREPARACIÓN" },
+  { date: "PRÓXIMAMENTE", topic: "LABORAL", title: "Ley N° 21.643: primeros criterios de la Dirección del Trabajo", excerpt: "Revisión de los pronunciamientos administrativos y su efecto práctico sobre los protocolos ya implementados.", status: "EN PREPARACIÓN" },
+  { date: "PRÓXIMAMENTE", topic: "COMPLIANCE", title: "Modelos de prevención de delitos: qué se revisa realmente", excerpt: "Qué evidencia de funcionamiento exigen matrices e instituciones financieras al revisar un modelo bajo la Ley N° 20.393.", status: "EN PREPARACIÓN" },
+  { date: "PRÓXIMAMENTE", topic: "CORPORATIVO", title: "Vehículos de proyecto en generación: estructura y tributación", excerpt: "Comparación de alternativas societarias para proyectos de generación y su tratamiento fiscal.", status: "EN PREPARACIÓN" },
+  { date: "PRÓXIMAMENTE", topic: "PATRIMONIAL", title: "Sucesión en grupos familiares con activos productivos", excerpt: "Cómo anticipar el traspaso sin interrumpir la operación ni gatillar cargas tributarias evitables.", status: "EN PREPARACIÓN" }
+];
+
+class Component extends DCLogic {
+  state = {
+    route: "/", megaOpen: false, searchOpen: false, query: "", lang: "es",
+    form: { name: "", company: "", email: "", area: "", message: "" },
+    formError: "", formSent: false,
+    isMobile: typeof window !== "undefined" ? window.innerWidth < 1080 : false,
+    isNarrow: typeof window !== "undefined" ? window.innerWidth < 780 : false,
+    mobileNav: false, mobileAreas: false
+  };
+
+  componentDidMount() {
+    this._onResize = () => {
+      const m = window.innerWidth < 1080, n = window.innerWidth < 780;
+      if (m !== this.state.isMobile || n !== this.state.isNarrow) this.setState({ isMobile: m, isNarrow: n, mobileNav: false });
+    };
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
+  }
+
+  componentWillUnmount() { window.removeEventListener("resize", this._onResize); }
+
+  nav(route) {
+    this.setState({ route, megaOpen: false, searchOpen: false, query: "", mobileNav: false, mobileAreas: false });
+    if (typeof window !== "undefined") window.scrollTo(0, 0);
+  }
+
+  person(slug) { return PEOPLE.find(p => p.slug === slug); }
+
+  decorateArea(a) {
+    const lead = this.person(a.lead);
+    return Object.assign({}, a, {
+      go: e => { if (e) e.preventDefault(); this.nav("/areas/" + a.slug); },
+      leadName: lead.name, leadRole: lead.role, leadInitials: lead.initials, leadPhoto: lead.photo, leadAlt: "Retrato de " + lead.name,
+      leadGo: e => { if (e) e.preventDefault(); this.nav("/equipo/" + lead.slug); },
+      paras: a.paras.map(P), services: a.services.map(P)
+    });
+  }
+
+  decoratePerson(p) {
+    return Object.assign({}, p, {
+      go: e => { if (e) e.preventDefault(); this.nav("/equipo/" + p.slug); },
+      alt: "Retrato de " + p.name,
+      mailto: "mailto:" + p.email,
+      tags: p.tags.map(P), bio: p.bio.map(P), education: p.education.map(P),
+      publications: (p.publications || []).map(P),
+      hasPublications: !!(p.publications && p.publications.length),
+      hasHonor: !!p.honor,
+      hasAreas: !!(p.areaSlugs && p.areaSlugs.length),
+      hasLinkedin: !!p.linkedin,
+      areas: p.areaSlugs.map(s => this.decorateArea(AREAS.find(a => a.slug === s)))
+    });
+  }
+
+  submit(e) {
+    if (e) e.preventDefault();
+    const f = this.state.form;
+    if (!f.name.trim() || !f.email.trim() || !f.area || !f.message.trim()) {
+      this.setState({ formError: "Complete los campos obligatorios: nombre, correo, área de interés y mensaje.", formSent: false });
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) {
+      this.setState({ formError: "El correo electrónico indicado no es válido.", formSent: false });
+      return;
+    }
+    this.setState({ formError: "", formSent: true, form: { name: "", company: "", email: "", area: "", message: "" } });
+  }
+
+  field(k) { return e => this.setState({ form: Object.assign({}, this.state.form, { [k]: e.target.value }) }); }
+
+  renderVals() {
+    const r = this.state.route;
+    const go = path => e => { if (e) e.preventDefault(); this.nav(path); };
+    const areas = AREAS.map(a => this.decorateArea(a));
+    const people = PEOPLE.map(p => this.decoratePerson(p));
+
+    const areaSlug = r.startsWith("/areas/") ? r.slice(7) : null;
+    const personSlug = r.startsWith("/equipo/") ? r.slice(8) : null;
+    const area = areaSlug ? areas.find(a => a.slug === areaSlug) : null;
+    const person = personSlug ? people.find(p => p.slug === personSlug) : null;
+
+    const q = this.state.query.trim().toLowerCase();
+    const results = !q ? [] : [
+      ...AREAS.filter(a => (a.name + " " + a.tagline).toLowerCase().includes(q))
+        .map(a => ({ kind: "ÁREA", label: a.name, go: go("/areas/" + a.slug) })),
+      ...PEOPLE.filter(p => (p.name + " " + p.role + " " + p.tags.join(" ")).toLowerCase().includes(q))
+        .map(p => ({ kind: "PROFESIONAL", label: p.name + " — " + p.role, go: go("/equipo/" + p.slug) })),
+      ...INSIGHTS.filter(i => i.title.toLowerCase().includes(q))
+        .map(i => ({ kind: "INSIGHT", label: i.title, go: go("/insights") }))
+    ].slice(0, 8);
+
+    const btn = active => "background:" + (active ? "#A32B2C" : "transparent") + ";border:none;color:" + (active ? "#FFFFFF" : "#9C978F") + ";cursor:pointer;padding:5px 8px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em";
+
+    const legalTitle = r === "/privacidad" ? "Política de privacidad" : "Aviso legal";
+    const legalBody = (r === "/privacidad" ? [
+      "PRAXIA, Centro de Estudios Tributarios en Minería y Energía SpA, RUT 78.471.797-6, trata los datos personales que los usuarios entregan a través del formulario de contacto con la única finalidad de responder la consulta formulada.",
+      "Los datos no son cedidos a terceros ni utilizados con fines comerciales distintos de aquel para el que fueron entregados. El titular puede solicitar en cualquier momento el acceso, rectificación o eliminación de sus datos escribiendo a contacto@praxia.com.",
+      "Este documento constituye un texto base y debe ser revisado por el equipo antes de la publicación del sitio."
+    ] : [
+      "El presente sitio pertenece a Centro de Estudios Tributarios en Minería y Energía SpA, RUT 78.471.797-6, con domicilio en Av. Vitacura 2939, piso 11, oficina 1101, Las Condes, Región Metropolitana, Chile.",
+      "Los contenidos publicados tienen carácter informativo y no constituyen asesoría legal ni tributaria para un caso particular. La aplicación de las normas citadas depende de los hechos concretos de cada situación.",
+      "Este documento constituye un texto base y debe ser revisado por el equipo antes de la publicación del sitio."
+    ]).map(P);
+
+    const routeLabels = { "/": "/", "/quienes-somos": "/quienes-somos", "/equipo": "/equipo", "/areas": "/areas", "/industrias/mineria-y-energia": "/industrias/mineria-y-energia", "/insights": "/insights", "/contacto": "/contacto", "/aviso-legal": "/aviso-legal", "/privacidad": "/privacidad" };
+
+    const m = this.state.isMobile, n = this.state.isNarrow;
+    return {
+      areas, people,
+      isMobile: m, isDesktop: !m,
+      mobileNav: this.state.mobileNav,
+      toggleMobileNav: () => this.setState({ mobileNav: !this.state.mobileNav }),
+      mobileAreas: this.state.mobileAreas,
+      toggleMobileAreas: () => this.setState({ mobileAreas: !this.state.mobileAreas }),
+      navIcon: this.state.mobileNav ? "✕" : "☰",
+      areasIcon: this.state.mobileAreas ? "−" : "+",
+      pad: n ? "20px" : "40px",
+      gridHero: n ? "1fr" : "1.15fr 0.85fr",
+      gridFacts: n ? "1fr 1fr" : "repeat(4, 1fr)",
+      gridSplit: n ? "1fr" : "0.9fr 1.1fr",
+      gridAside: n ? "1fr" : "1fr minmax(280px, 360px)",
+      gridPerson: n ? "1fr" : "minmax(280px, 360px) 1fr",
+      gridAreaBody: n ? "1fr" : "1fr minmax(280px, 340px)",
+      gridContact: n ? "1fr" : "1fr minmax(260px, 340px)",
+      gridHalf: n ? "1fr" : "1fr 1fr",
+      gridAreaRow: n ? "1fr" : "72px 1fr 200px",
+      gridInsightRow: n ? "1fr" : "170px 1fr 150px",
+      gridFooter: n ? "1fr 1fr" : "1.2fr 1fr 1fr 1fr",
+      gapWide: n ? "36px" : m ? "48px" : "72px",
+      h1Size: n ? "34px" : m ? "46px" : "60px",
+      pageH1Size: n ? "30px" : m ? "40px" : "48px",
+      areaH1Size: n ? "32px" : m ? "42px" : "50px",
+      industriaH1Size: n ? "34px" : m ? "46px" : "56px",
+      megaOpen: this.state.megaOpen,
+      openMega: () => this.setState({ megaOpen: true }),
+      closeMega: () => this.setState({ megaOpen: false }),
+      searchOpen: this.state.searchOpen,
+      toggleSearch: () => this.setState({ searchOpen: !this.state.searchOpen }),
+      query: this.state.query,
+      onQuery: e => this.setState({ query: e.target.value }),
+      results,
+      noResults: q.length > 1 && results.length === 0,
+      isEn: this.state.lang === "en",
+      setEs: () => this.setState({ lang: "es" }),
+      setEn: () => this.setState({ lang: "en" }),
+      esStyle: btn(this.state.lang === "es"),
+      enStyle: btn(this.state.lang === "en"),
+
+      goHome: go("/"), goQuienes: go("/quienes-somos"), goEquipo: go("/equipo"),
+      goAreas: go("/areas"), goIndustria: go("/industrias/mineria-y-energia"),
+      goInsights: go("/insights"), goContacto: go("/contacto"),
+      goAviso: go("/aviso-legal"), goPrivacidad: go("/privacidad"),
+
+      isHome: r === "/", isQuienes: r === "/quienes-somos",
+      isEquipo: r === "/equipo", isPerson: !!person,
+      isAreas: r === "/areas", isArea: !!area,
+      isIndustria: r === "/industrias/mineria-y-energia",
+      isInsights: r === "/insights", isContacto: r === "/contacto",
+      isLegal: r === "/aviso-legal" || r === "/privacidad",
+      routeLabel: routeLabels[r] || r,
+      area, person,
+      personPhotoUrl: person ? "url(" + person.photo + ")" : "none",
+      personAlt: person ? person.alt : "",
+      otherAreas: area ? areas.filter(a => a.slug !== area.slug) : [],
+
+      showCredentials: this.props.showCredentials ?? true,
+      credentials: [
+        { kind: "MEMBRESÍA", title: "Cámara Minera de Chile", note: "Presidencia ejercida por uno de nuestros directores." },
+        { kind: "PUBLICACIONES", title: "Notas técnicas del equipo", note: "Serie de análisis normativo en preparación." },
+        { kind: "RANKING", title: "Espacio reservado", note: "Estructura lista para incorporar reconocimientos de directorios legales." },
+        { kind: "CASOS", title: "Casos representativos", note: "Se publicarán con autorización expresa de los clientes." }
+      ],
+
+      facts: [
+        { value: "7", label: "Áreas de práctica integradas" },
+        { value: "3", label: "Directores a cargo directo de cada encargo" },
+        { value: "Minería y Energía", label: "Industria de especialización declarada en la razón social" },
+        { value: "Santiago", label: "Av. Vitacura 2939, Las Condes" }
+      ],
+
+      aboutParas: [
+        "PRAXIA es el nombre comercial de Centro de Estudios Tributarios en Minería y Energía SpA, una firma constituida para atender de manera especializada las materias tributarias, corporativas, laborales y de cumplimiento de las compañías del sector minero-energético y de los grupos familiares vinculados a él.",
+        "La firma nace de una constatación concreta: la asesoría tributaria general no resuelve bien los problemas de una industria con reglas propias —regímenes especiales, activos de larga vida, contratación en faena y estándares de cumplimiento exigidos por matrices e inversionistas extranjeros.",
+        "Trabajamos con un modelo de atención directa: los tres directores participan del análisis de cada encargo y responden personalmente al cliente. No intermediamos la relación a través de equipos junior.",
+        "Nuestro marco de trabajo es la legislación chilena vigente. Cada recomendación se entrega con su fundamento normativo explícito y con la estimación del efecto financiero que produce."
+      ],
+      pillars: [
+        { title: "Especialización sectorial", text: "La industria minero-energética está declarada en nuestra razón social, no es un vertical más de la firma." },
+        { title: "Atención directa", text: "Los directores conducen el encargo. El cliente conversa con quien toma la decisión técnica." },
+        { title: "Respaldo verificable", text: "Cada propuesta indica la norma que la sustenta y el efecto financiero que produce." }
+      ],
+      legalRows: [
+        { k: "Razón social", v: "Centro de Estudios Tributarios en Minería y Energía SpA" },
+        { k: "RUT", v: "78.471.797-6" },
+        { k: "Domicilio", v: "Av. Vitacura 2939, piso 11, oficina 1101, Las Condes, Región Metropolitana" },
+        { k: "Correo", v: "contacto@praxia.com" },
+        { k: "Teléfono", v: "[pendiente — completar antes de publicar]" }
+      ],
+      industryParas: [
+        "La minería y la generación de energía concentran en Chile una parte relevante de la inversión de largo plazo, y con ella un conjunto de reglas que no se aplican al resto de la economía: regímenes tributarios específicos, sistemas excepcionales de jornada, permisos sectoriales y exigencias de cumplimiento impuestas por casas matrices y por la banca de proyecto.",
+        "PRAXIA organiza sus siete áreas de práctica en torno a ese conjunto de reglas. Un mismo expediente puede requerir simultáneamente una decisión de estructura societaria, una revisión de la carga tributaria efectiva, la autorización de un sistema de turnos y la actualización de un modelo de prevención de delitos.",
+        "El equipo trabaja de forma integrada sobre ese expediente único, con un director responsable frente al cliente."
+      ],
+      norms: [
+        { title: "Ley N° 20.393", note: "Responsabilidad penal de las personas jurídicas y modelos de prevención de delitos." },
+        { title: "Ley N° 21.643", note: "Prevención, investigación y sanción del acoso laboral y sexual en el trabajo." },
+        { title: "Régimen de royalty minero", note: "Determinación de la carga efectiva sobre la renta operacional minera." },
+        { title: "Código del Trabajo", note: "Jornadas excepcionales, subcontratación y negociación colectiva en faena." }
+      ],
+      insights: INSIGHTS,
+      homeInsights: INSIGHTS.slice(0, this.props.homeInsightsCount ?? 3),
+      legalTitle, legalBody,
+
+      form: this.state.form,
+      onName: this.field("name"), onCompany: this.field("company"),
+      onEmail: this.field("email"), onArea: this.field("area"), onMessage: this.field("message"),
+      onSubmit: e => this.submit(e),
+      formError: this.state.formError, formSent: this.state.formSent,
+      submitLabel: this.state.formSent ? "Enviar otra consulta" : "Enviar consulta"
+    };
+  }
+}
+
+</script>
+</body>
+</html>
